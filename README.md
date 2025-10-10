@@ -7,3 +7,7 @@ Vídeo base para a criação do Jogo: JavaScript Fighting Game Tutorial with HTM
 11/10/25 (vinicius)
 -> colocar o favicon do lado do título do site(prioridade mínima)
 -> progresso até o minuto 19:50
+
+12/10/25
+-> minuto 50:16
+-> personagens e comandos de teclas criados
