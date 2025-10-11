@@ -9,5 +9,5 @@ Vídeo base para a criação do Jogo: JavaScript Fighting Game Tutorial with HTM
 -> progresso até o minuto 19:50
 
 12/10/25
--> minuto 50:16
--> personagens e comandos de teclas criados
+-> minuto 56:16
+-> personagens, comandos de teclas criados, sprites dos ataques criados

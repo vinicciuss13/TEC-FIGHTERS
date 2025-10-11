@@ -9,14 +9,25 @@ c.fillRect(0, 0, canvas.width, canvas.height) //pinta um retângulo no canvas, n
 const gravity = 0.2 
 
 class Sprite {
-    constructor({position, velocity}){
+    constructor({position, velocity, color = 'red'}){
         this.position = position
         this.velocity = velocity
         this.height = 150
+        this.lastKey
+        this.attackbox = {
+            position: this.position,
+            width: 100,
+            height: 50
+        }
+        this.color = color
     }
     desenho(){
-        c.fillStyle = 'red' //cor do retângulo
+        c.fillStyle = this.color //cor do retângulo
         c.fillRect(this.position.x, this.position.y, 50, this.height) //desenha o retângulo na posição x e y do objeto
+
+        // attack box
+        c.fillStyle= 'green'
+        c.fillRect(this.attackbox.position.x, this.attackbox.position.y, this.attackbox.width, this.attackbox.height)
     }
 
     update(){
@@ -51,8 +62,10 @@ const enemy = new Sprite({
 },
     velocity: {
     x: 0,
-    y: 0
-}})
+    y: 0,
+},
+    color: 'blue'
+})
 
 console.log(player)
 
@@ -76,9 +89,15 @@ function animate(){
     player.velocity.x = 0
 
     if(keys.a.pressed && lastKey === 'a'){
-        player.velocity.x = -1
+        player.velocity.x = -2
     } else if (keys.d.pressed && lastKey ==='d'){
-        player.velocity.x = 1
+        player.velocity.x = 2
+    }
+
+    //Colisão com o inimigo
+    if(player.attackbox.position.x + player.attackbox.width >= enemy.position.x)
+    {
+        console.log(go);
     }
 }
 
