@@ -9,20 +9,25 @@ c.fillRect(0, 0, canvas.width, canvas.height) //pinta um retângulo no canvas, n
 const gravity = 0.7 //gravidade do jogo 
 
 class Sprite {
-    constructor({position, velocity, color = 'red'}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
+    constructor({position, velocity, color = 'red', offset}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
         this.position = position
         this.velocity = velocity
         this.width = 50
         this.height = 150
         this.lastKey //ultima tecla pressionada
         this.attackbox = { //hitbox
-            position: this.position, //posição da hitbox é a mesma do personagem
+            position:{
+                x:this.position.x,
+                y:this.position.y
+            },
+            offset,
             width: 100,
             height: 50
         }
         this.color = color 
         this.isAttacking 
     }
+
     desenho(){
         c.fillStyle = this.color //cor do retângulo
         c.fillRect(this.position.x, this.position.y, this.width, this.height) //desenha o retângulo na posição x e y do objeto
@@ -35,12 +40,14 @@ class Sprite {
          this.attackbox.position.y
          , this.attackbox.width,
           this.attackbox.height)
-        }
+       }
     }
 
     update(){
         this.desenho() //desenha o retângulo na tela
-         
+        this.attackbox.position.x = this.position.x + this.attackbox.offset.x //atualiza a posição da hitbox com a posição do retângulo
+        this.attackbox.position.y = this.position.y //atualiza a posição da hitbox com a posição do retângulo
+        
         this.position.x += this.velocity.x //atualiza a posição do retângulo com base na velocidade
         this.position.y += this.velocity.y //atualiza a posição do retângulo com base na velocidade
       
@@ -62,11 +69,16 @@ const player = new Sprite({ //cria um novo objeto da classe Sprite
     position: { //posição inicial do retângulo
     x: 0,
     y: 0
-},
+ },
     velocity: { //velocidade inicial do retângulo
     x: 0,
     y: 0
-}})
+ },
+    offset: { 
+        x:0,
+        y:0
+    }
+})
 
 
 
@@ -79,7 +91,11 @@ const enemy = new Sprite({ //cria um novo objeto da classe Sprite
     x: 0,
     y: 0,
 },
-    color: 'blue' 
+    color: 'blue',
+    offset: { 
+        x: -50,
+        y:0
+    }
 })
 
 console.log(player) // imprime o objeto player e enemy no console
@@ -106,6 +122,15 @@ const keys = {
     }
 }
 
+function rectangularCollision({rectangle1, rectangle2}){
+    return(
+        rectangle1.attackbox.position.x + rectangle1.attackbox.width >=rectangle2.position.x && 
+        rectangle1.attackbox.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.attackbox.position.y + rectangle1.attackbox.height >= rectangle2.position.y &&
+        rectangle1.attackbox.position.y <= rectangle2.position.y + rectangle2.height
+    )
+}
+
 function animate(){
     window.requestAnimationFrame(animate) //chama a função animar novamente, criando um loop infinito 
     c.fillStyle = 'black' //cor do fundo do jogo
@@ -114,7 +139,7 @@ function animate(){
     enemy.update() //atualiza a posição do inimigo
 
     player.velocity.x = 0 //zera a velocidade horizontal do jogador
-    enemy.velocity.x = 0 //zera a velocidade horizontal do inimigo
+    enemy.velocity.x = 0 //zera a velocidade horizontal do inimigo     
 
     //MOVIMENTAÇÃO DO JOGADOR
 
@@ -133,12 +158,26 @@ function animate(){
     }
 
     //Colisão com o inimigo
-    if(player.attackbox.position.x + player.attackbox.width >=
-       enemy.position.x && player.attackbox.position.x <= enemy.position.x + enemy.width &&
-    player.attackbox.position.y + player.attackbox.height >= enemy.position.y && player.isAttacking) //verifica se a caixa de ataque do jogador colidiu com o inimigo
+    if( 
+        rectangularCollision({
+            rectangle1: player,
+            rectangle2: enemy
+        }) &&
+        player.isAttacking) //verifica se a caixa de ataque do jogador colidiu com o inimigo
     {
         player.isAttacking = false //reseta o estado de ataque do jogador
-        console.log('colidiu') 
+        console.log('player bateu') 
+    }
+    //Colisão com o jogador
+    if( 
+        rectangularCollision({
+            rectangle1: player,
+            rectangle2: enemy
+        }) &&
+        enemy.isAttacking) //verifica se a caixa de ataque do jogador colidiu com o inimigo
+    {
+        enemy.isAttacking = false //reseta o estado de ataque do jogador
+        console.log('inimigo bateu') 
     }
 }
 
@@ -157,7 +196,7 @@ window.addEventListener('keydown', (event) => { //adiciona um listener para o ev
             break
         case 'w':
             keys.w.pressed = true //o w fará o personagem pular
-            player.velocity.y = -15 //define a velocidade vertical do jogador para cima
+            player.velocity.y = -20 //define a velocidade vertical do jogador para cima
             break
         case ' ':
             player.attack() 
@@ -174,10 +213,11 @@ window.addEventListener('keydown', (event) => { //adiciona um listener para o ev
             enemy.lastKey = 'ArrowLeft' //isso é pra movimentação do inimgo não substitui a do player
             break
         case 'ArrowUp':
-            keys.ArrowUp.pressed = true //seta pra cima fará o inimigo pular
-            
             enemy.velocity.y = -20 //define a velocidade vertical do inimigo para cima
             break
+        case 'ArrowDown':
+            enemy.isAttacking = true
+            break    
 }
         console.log(event.key) //imprime a tecla pressionada no console
 })

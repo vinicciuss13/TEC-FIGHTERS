@@ -13,7 +13,12 @@ _IMPORTANTE_: definir os botoes de ataque e bloqueio dentro do addEventListener(
 11/10/25 de tarde
 -> progresso até o minuto 40:00
 
-12/10/25 3:38
+12/10/25 3:38 da manha
 -> progresso até a hora 1:03:20
 -> movimentos base dos personagens com eventListen terminados
 -> base de hitboxes de ataque criados
+
+12/1025 23:59
+-> progresso até a hora 1:03:20
+-> base dos ataques terminados
+-> começo da criação da barra de vida dos personagens

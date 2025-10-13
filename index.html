@@ -6,7 +6,20 @@
     <title>TEC FIGHTERS</title>
 </head>
 <body>
-    <canvas></canvas>
+    <!-- container vermelho-->
+    <div style="position: relative;">
+        <!-- container menor-->
+        <div style="position: absolute; display: flex; width: 100%;"> 
+            <!-- barra de vida do jogador-->
+            <div style="background-color: yellow; height: 30px; width: 100%;"></div>
+            <!-- timer-->
+            <div style="background-color: red; width: 80px; height: 80px;"></div>
+            <!-- barra de vida do inimigo-->
+            <div style="background-color: yellow; height: 30px; width: 100%;"></div>
+        </div>
+        <canvas></canvas>
+    </div>
+
     <script src="index.js"></script>
 </body>
 </html>
