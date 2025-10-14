@@ -26,6 +26,7 @@ class Sprite {
         }
         this.color = color 
         this.isAttacking 
+        this.health = 100
     }
 
     desenho(){
@@ -166,6 +167,8 @@ function animate(){
         player.isAttacking) //verifica se a caixa de ataque do jogador colidiu com o inimigo
     {
         player.isAttacking = false //reseta o estado de ataque do jogador
+        enemy.health -= 10 
+            document.querySelector('#enemyHealth').style.width = enemy.health + "%" //diminui a barra de vida do inimigo
         console.log('player bateu') 
     }
     //Colisão com o jogador
@@ -177,6 +180,8 @@ function animate(){
         enemy.isAttacking) //verifica se a caixa de ataque do jogador colidiu com o inimigo
     {
         enemy.isAttacking = false //reseta o estado de ataque do jogador
+        player.health -= 10
+            document.querySelector('#playerHealth').style.width = player.health + "%" //diminui a barra de vida do jogador
         console.log('inimigo bateu') 
     }
 }
