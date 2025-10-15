@@ -123,7 +123,7 @@ const keys = {
     }
 }
 
-function rectangularCollision({rectangle1, rectangle2}){
+function rectangularCollision({rectangle1, rectangle2}){ //função que verifica se dois retângulos estão colidindo
     return(
         rectangle1.attackbox.position.x + rectangle1.attackbox.width >=rectangle2.position.x && 
         rectangle1.attackbox.position.x <= rectangle2.position.x + rectangle2.width &&
@@ -131,6 +131,34 @@ function rectangularCollision({rectangle1, rectangle2}){
         rectangle1.attackbox.position.y <= rectangle2.position.y + rectangle2.height
     )
 }
+
+function determineWinner({player, enemy, timerID}){
+    clearTimeout(timerID) //cancela o timer
+    document.querySelector('#displayText').style.display = 'flex' //exibe o texto de vitória
+    if (player.health === enemy.health){ 
+        document.querySelector('#displayText').innerHTML = 'Empate'
+    }  else if (player.health > enemy.health){
+        document.querySelector('#displayText').innerHTML = 'Jogador 1 Venceu'
+    } else if (enemy.health > player.health){
+        document.querySelector('#displayText').innerHTML = 'Jogador 2 Venceu'
+    } 
+}
+
+let timer = 60
+let timerID
+function decreaseTimer(){
+    if(timer > 0){
+        timerID = setTimeout(decreaseTimer, 1000)
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+    }
+
+    if (timer === 0){
+        document.querySelector('#displayText').style.display = 'flex'
+        determineWinner({player, enemy, timerID})
+    } 
+}   
+decreaseTimer()
 
 function animate(){
     window.requestAnimationFrame(animate) //chama a função animar novamente, criando um loop infinito 
@@ -184,6 +212,11 @@ function animate(){
             document.querySelector('#playerHealth').style.width = player.health + "%" //diminui a barra de vida do jogador
         console.log('inimigo bateu') 
     }
+
+    //condição de vitória por vida
+    if (enemy.health <= 0 || player.health <= 0){
+        determineWinner({player, enemy, timerID}) // Corrija aqui!
+ }
 }
 
 animate() //chama a função animar pela primeira vez para iniciar o loop

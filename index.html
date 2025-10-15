@@ -48,13 +48,16 @@
 
             <!-- timer-->
 
-            <div 
+            <div id="timer" 
             style="background-color: red;
                     width: 80px;
                     height: 80px;
                     flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     "
-            ></div>
+            >10</div>
 
             <!-- barra de vida do inimigo-->
 
@@ -74,6 +77,17 @@
             </div>
             <div></div>
         </div>
+        <div id="displayText"
+        style="position: absolute;
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        ">Empate</div>
         <canvas></canvas>
 
     <script src="index.js"></script>

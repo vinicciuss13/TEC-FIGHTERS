@@ -28,3 +28,7 @@ _IMPORTANTE_:
 13/10/25 23:45
 -> progresso até a hora 1:34:27
 -> interface básica de vida dos personagens criada
+
+15/10/25
+-> progresso até a hora 1:52:34
+-> timer e game over criados
