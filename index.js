@@ -7,66 +7,15 @@ canvas.height = 576
 c.fillRect(0, 0, canvas.width, canvas.height) //pinta um retângulo no canvas, nesse caso o fundo do jogo
 
 const gravity = 0.7 //gravidade do jogo 
+const background = new Sprite({
+    position: {
+        x:0,
+        y:0
+    },
+    imageSrc: './img/fundo_rua.png'
+})
 
-class Sprite {
-    constructor({position, velocity, color = 'red', offset}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
-        this.position = position
-        this.velocity = velocity
-        this.width = 50
-        this.height = 150
-        this.lastKey //ultima tecla pressionada
-        this.attackbox = { //hitbox
-            position:{
-                x:this.position.x,
-                y:this.position.y
-            },
-            offset,
-            width: 100,
-            height: 50
-        }
-        this.color = color 
-        this.isAttacking 
-        this.health = 100
-    }
-
-    desenho(){
-        c.fillStyle = this.color //cor do retângulo
-        c.fillRect(this.position.x, this.position.y, this.width, this.height) //desenha o retângulo na posição x e y do objeto
-
-        // hitbox
-        if(this.isAttacking){//se o personagem estiver atacando, desenha a hitbox
-        c.fillStyle= 'green'
-        c.fillRect(
-        this.attackbox.position.x,
-         this.attackbox.position.y
-         , this.attackbox.width,
-          this.attackbox.height)
-       }
-    }
-
-    update(){
-        this.desenho() //desenha o retângulo na tela
-        this.attackbox.position.x = this.position.x + this.attackbox.offset.x //atualiza a posição da hitbox com a posição do retângulo
-        this.attackbox.position.y = this.position.y //atualiza a posição da hitbox com a posição do retângulo
-        
-        this.position.x += this.velocity.x //atualiza a posição do retângulo com base na velocidade
-        this.position.y += this.velocity.y //atualiza a posição do retângulo com base na velocidade
-      
-        if(this.position.y + this.height + this.velocity.y >=canvas.height) //impede que o retângulo caia infinitamente
-        {
-            this.velocity.y = 0 //para a queda
-        } else this.velocity.y += gravity //aplica a gravidade
-    }
-
-    attack(){
-        this.isAttacking = true
-        setTimeout(() => {
-            this.isAttacking = false
-        }, 100)
-    }
-}
-
-const player = new Sprite({ //cria um novo objeto da classe Sprite
+const player = new Fighter({ //cria um novo objeto da classe Sprite
     position: { //posição inicial do retângulo
     x: 0,
     y: 0
@@ -81,9 +30,7 @@ const player = new Sprite({ //cria um novo objeto da classe Sprite
     }
 })
 
-
-
-const enemy = new Sprite({ //cria um novo objeto da classe Sprite
+const enemy = new Fighter({ //cria um novo objeto da classe Sprite
     position: { //posição inicial do retângulo
     x: 400,
     y: 100
@@ -123,47 +70,15 @@ const keys = {
     }
 }
 
-function rectangularCollision({rectangle1, rectangle2}){ //função que verifica se dois retângulos estão colidindo
-    return(
-        rectangle1.attackbox.position.x + rectangle1.attackbox.width >=rectangle2.position.x && 
-        rectangle1.attackbox.position.x <= rectangle2.position.x + rectangle2.width &&
-        rectangle1.attackbox.position.y + rectangle1.attackbox.height >= rectangle2.position.y &&
-        rectangle1.attackbox.position.y <= rectangle2.position.y + rectangle2.height
-    )
-}
 
-function determineWinner({player, enemy, timerID}){
-    clearTimeout(timerID) //cancela o timer
-    document.querySelector('#displayText').style.display = 'flex' //exibe o texto de vitória
-    if (player.health === enemy.health){ 
-        document.querySelector('#displayText').innerHTML = 'Empate'
-    }  else if (player.health > enemy.health){
-        document.querySelector('#displayText').innerHTML = 'Jogador 1 Venceu'
-    } else if (enemy.health > player.health){
-        document.querySelector('#displayText').innerHTML = 'Jogador 2 Venceu'
-    } 
-}
-
-let timer = 60
-let timerID
-function decreaseTimer(){
-    if(timer > 0){
-        timerID = setTimeout(decreaseTimer, 1000)
-        timer--
-        document.querySelector('#timer').innerHTML = timer
-    }
-
-    if (timer === 0){
-        document.querySelector('#displayText').style.display = 'flex'
-        determineWinner({player, enemy, timerID})
-    } 
-}   
 decreaseTimer()
 
 function animate(){
     window.requestAnimationFrame(animate) //chama a função animar novamente, criando um loop infinito 
     c.fillStyle = 'black' //cor do fundo do jogo
     c.fillRect(0,0, canvas.width, canvas.height) //pinta o fundo do jogo
+    
+    background.update() //desenha o fundo do jogo
     player.update() //atualiza a posição do jogador
     enemy.update() //atualiza a posição do inimigo
 

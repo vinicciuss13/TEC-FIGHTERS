@@ -7,7 +7,7 @@ Vídeo base para a criação do Jogo: JavaScript Fighting Game Tutorial with HTM
 _IMPORTANTE_:
 ->definir os botoes de ataque e bloqueio dentro do addEventListener(linha 140+)
 ->definir cor da barra de vida
-->colocar favicon na aba da página
+->definir a escolha de fundo e a escolha de personagens
 
 11/10/25 (vinicius) 3:29 da manha
 -> progresso até o minuto 19:50
@@ -30,5 +30,6 @@ _IMPORTANTE_:
 -> interface básica de vida dos personagens criada
 
 15/10/25
--> progresso até a hora 1:52:34
+-> progresso até a hora 2:05:07
 -> timer e game over criados
+-> o fundo como sprite foi criado
