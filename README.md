@@ -33,3 +33,6 @@ _IMPORTANTE_:
 -> progresso até a hora 2:05:07
 -> timer e game over criados
 -> o fundo como sprite foi criado
+
+28/10/25
+-> menu criado com botões de iniciar jogo, termos de uso e créditos funcionais

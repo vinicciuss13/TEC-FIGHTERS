@@ -70,9 +70,6 @@ const keys = {
     }
 }
 
-
-decreaseTimer()
-
 function animate(){
     window.requestAnimationFrame(animate) //chama a função animar novamente, criando um loop infinito 
     c.fillStyle = 'black' //cor do fundo do jogo
@@ -134,7 +131,22 @@ function animate(){
  }
 }
 
-animate() //chama a função animar pela primeira vez para iniciar o loop
+// NÃO chama animate() aqui automaticamente
+// animate()
+
+// Função pública para iniciar o jogo a partir do menu
+window.startGame = function() {
+    if (window.__gameStarted) return
+    window.__gameStarted = true
+
+    // Esconder o menu principal (se existir)
+    const menu = document.getElementById('mainMenu')
+    if (menu) menu.style.display = 'none'
+
+    // Iniciar o timer (função definida em utilidade.js) e o loop de animação
+    if (typeof decreaseTimer === 'function') decreaseTimer()
+    animate()
+}
 
 window.addEventListener('keydown', (event) => { //adiciona um listener para o evento de tecla pressionada
     console.log(event.key) //imprime a tecla pressionada no console
