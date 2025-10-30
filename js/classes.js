@@ -1,10 +1,15 @@
 class Sprite {
-    constructor({position, imageSrc}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
+    constructor({position, imageSrc, scale= 1, framesMax = 1}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
         this.position = position
         this.width = 50
         this.height = 150
         this.image = new Image()
         this.image.src = imageSrc
+        this.scale = scale
+        this.framesMax = framesMax
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
     }
 
     desenho() {
@@ -17,9 +22,24 @@ class Sprite {
     }
 }
 
-class Fighter {
-    constructor({position, velocity, color = 'red', offset}){ //construtor da classe Sprite, que recebe um objeto com as propriedades position e velocity
-        this.position = position
+class Fighter extends Sprite {
+    constructor({
+        position,
+        velocity,
+        color = 'red',
+        offset,
+        imageSrc,
+        scale = 1,
+        framesMax = 1
+    }) { //construtor da classe Fighter, que recebe um objeto com as propriedades position e velocity
+        super({
+            position,
+            imageSrc, 
+            scale,
+            framesMax,
+            
+        })
+
         this.velocity = velocity
         this.width = 50
         this.height = 150
@@ -36,22 +56,11 @@ class Fighter {
         this.color = color 
         this.isAttacking 
         this.health = 100
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
     }
 
-    desenho(){
-        c.fillStyle = this.color //cor do retângulo
-        c.fillRect(this.position.x, this.position.y, this.width, this.height) //desenha o retângulo na posição x e y do objeto
-
-        // hitbox
-        if(this.isAttacking){//se o personagem estiver atacando, desenha a hitbox
-        c.fillStyle= 'green'
-        c.fillRect(
-        this.attackbox.position.x,
-         this.attackbox.position.y
-         , this.attackbox.width,
-          this.attackbox.height)
-       }
-    }
 
     update(){
         this.desenho() //desenha o retângulo na tela

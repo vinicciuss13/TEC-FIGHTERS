@@ -27,7 +27,8 @@ const player = new Fighter({ //cria um novo objeto da classe Sprite
     offset: { 
         x:0,
         y:0
-    }
+    },
+    imageSrc
 })
 
 const enemy = new Fighter({ //cria um novo objeto da classe Sprite

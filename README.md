@@ -36,3 +36,6 @@ _IMPORTANTE_:
 
 28/10/25
 -> menu criado com botões de iniciar jogo, termos de uso e créditos funcionais
+
+30/10/25
+-> seleção de personagens criada
