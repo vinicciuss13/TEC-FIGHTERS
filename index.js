@@ -28,7 +28,22 @@ const player = new Fighter({ //cria um novo objeto da classe Sprite
         x:0,
         y:0
     },
-    imageSrc
+    imageSrc: './img/vinicius/viniciusParado.png',
+    framesMax: 6,
+    offset: {
+        x:-50,
+        y:375,
+    },
+    sprites: {
+        idle:{
+            imageSrc: './img/vinicius/viniciusParado.png',
+            framesMax: 6
+        },
+        run:{
+            imageSrc: './img/vinicius/viniciusCorrendo.png',
+            framesMax: 8
+        }
+    }
 })
 
 const enemy = new Fighter({ //cria um novo objeto da classe Sprite
@@ -78,7 +93,7 @@ function animate(){
     
     background.update() //desenha o fundo do jogo
     player.update() //atualiza a posição do jogador
-    enemy.update() //atualiza a posição do inimigo
+    //enemy.update() //atualiza a posição do inimigo
 
     player.velocity.x = 0 //zera a velocidade horizontal do jogador
     enemy.velocity.x = 0 //zera a velocidade horizontal do inimigo     
@@ -86,17 +101,17 @@ function animate(){
     //MOVIMENTAÇÃO DO JOGADOR
 
     if(keys.a.pressed && player.lastKey === 'a'){ //se a tecla 'a' estiver pressionada e for a última tecla pressionada
-        player.velocity.x = -5 //move o jogador para a esquerda
+        player.velocity.x = -7 //move o jogador para a esquerda
     } else if (keys.d.pressed && player.lastKey ==='d'){ //mesma lógica para a tecla 'd'
-        player.velocity.x = 5
+        player.velocity.x = 7
     }
     
     //MOVIMENTAÇÃO DO INIMIGO
 
     if(keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft'){ //se a tecla 'ArrowLeft' estiver pressionada e for a última tecla pressionada
-        enemy.velocity.x = -5 //move o inimigo para a esquerda
+        enemy.velocity.x = -7 //move o inimigo para a esquerda
     } else if (keys.ArrowRight.pressed && enemy.lastKey ==='ArrowRight'){ //mesma lógica para a tecla 'ArrowRight'
-        enemy.velocity.x = 5
+        enemy.velocity.x = 7
     }
 
     //Colisão com o inimigo
@@ -162,7 +177,7 @@ window.addEventListener('keydown', (event) => { //adiciona um listener para o ev
             break
         case 'w':
             keys.w.pressed = true //o w fará o personagem pular
-            player.velocity.y = -20 //define a velocidade vertical do jogador para cima
+            player.velocity.y = -16.85 //define a velocidade vertical do jogador para cima
             break
         case ' ':
             player.attack() 
@@ -179,7 +194,7 @@ window.addEventListener('keydown', (event) => { //adiciona um listener para o ev
             enemy.lastKey = 'ArrowLeft' //isso é pra movimentação do inimgo não substitui a do player
             break
         case 'ArrowUp':
-            enemy.velocity.y = -20 //define a velocidade vertical do inimigo para cima
+            enemy.velocity.y = -16.85 //define a velocidade vertical do inimigo para cima
             break
         case 'ArrowDown':
             enemy.isAttacking = true
